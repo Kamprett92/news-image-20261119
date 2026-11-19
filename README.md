@@ -10,7 +10,8 @@ against the other entries.
 
 ## The image
 
-Sixteen stories, each verified against reporting dated 19 November 2026:
+Twenty-five stories, each verified against reporting dated
+19 November 2026:
 
 1. **Crimean Bridge hit again** — Ukraine struck the bridge overnight,
    hitting its railway section; traffic suspended.
@@ -30,26 +31,46 @@ Sixteen stories, each verified against reporting dated 19 November 2026:
    Brussels defence meeting early over long-range strikes.
 9. **Amnesty: RSF strikes are war crimes** — drone attacks on El Obeid
    killed 37 civilians.
-10. **China launches mystery satellite** — Shijian-24 lifts off on a
+10. **Coalition of the Willing meets in Berlin** — European leaders meet
+    with Witkoff and Kushner on Ukraine security guarantees.
+11. **Houthi missile threat to Riyadh** — the Saudi-led coalition says it
+    dealt with a Houthi missile; debris fell and damage was assessed.
+12. **EU delays methane rules two years** — methane reporting rules for
+    energy imports postponed, citing the Iran war disruption.
+13. **China launches mystery satellite** — Shijian-24 lifts off on a
     Long March 2D rocket.
-11. **COP31 gives kelp a seat at the table** — kelp forests recognised in
+14. **COP31 gives kelp a seat at the table** — kelp forests recognised in
     ocean-climate talks for the first time.
-12. **OpenAI redesigns AMD chips, +14%** — AI models compress a year of
+15. **OpenAI redesigns AMD chips, +14%** — AI models compress a year of
     chip work into months.
-13. **Corinthians thrash Botafogo 4–0** — Brazilian league rout.
-14. **DOJ issues 200+ Alaska subpoenas** — probe into a decoy candidate
+16. **Malaysia's economy grows 5.5%** — Q3 growth stronger than expected.
+17. **KGHM beats forecasts** — the Polish copper miner's Q3 net profit
+    reached PLN 1.94B.
+18. **mRNA vaccine shields against Nipah** — a dual-antigen jab protected
+    all hamsters from Nipah and Hendra in a Nature Communications study.
+19. **Gut sugar found to burn belly fat** — Duke-NUS links a gut
+    bacterium's sugar to higher energy use in belly fat.
+20. **Corinthians thrash Botafogo 4–0** — Brazilian league rout.
+21. **Grizzlies set road win record** — 124–121 at Cleveland, their
+    eighth straight road win.
+22. **DOJ issues 200+ Alaska subpoenas** — probe into a decoy candidate
     in the Senate race.
-15. **Four nations: let aid reach Gaza** — Australia, Canada, Italy and
+23. **Four nations: let aid reach Gaza** — Australia, Canada, Italy and
     the UK call for access as floods hit the Strip.
-16. **Panama: second arrest in attack case** — suspect held over the
+24. **Panama: second arrest in attack case** — suspect held over the
     attack on journalist Rolando Rodríguez's home.
+25. **Nigeria shares ₦2.44 trillion** — FAAC payout to federal, state
+    and local governments.
 
 Dropped after checking (v1 research): no North Korea missile launch
 happened on 19 November, Jeffries was only nominated for Speaker on
 18 November (the House votes 3 January), and Voyager 1 passed one
 light-day from Earth on 18 November, not the 19th. V2 research also
 rejected 17–18 Nov items passed off as 19 Nov news (Fed minutes,
-ARIA/CMA awards, Nvidia earnings, Gaza ground operation).
+ARIA/CMA awards, Nvidia earnings, Gaza ground operation). V3 research
+rejected Palo Alto's Applied Compute deal, NASA space dust and the
+California AI plan (all 18 Nov), and cut a verified Mavericks NBA win
+because two NBA results add no breadth.
 
 ## How it is built
 
@@ -64,7 +85,7 @@ mkdir -p out && MAKEFUN_OUTPUT_DIR=out python3 main.py
 ```
 
 Checks run locally on 19 November 2026: `entry.png` is 1024×1024 and
-137,081 bytes (limit 1 MiB); `main.py` run twice produces byte-identical
+150,414 bytes (limit 1 MiB); `main.py` run twice produces byte-identical
 output (`cmp` clean both times).
 
 ## License

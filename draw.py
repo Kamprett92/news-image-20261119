@@ -1,4 +1,4 @@
-"""Draw the 19 November 2026 world-news front page (v2).
+"""Draw the 19 November 2026 world-news front page (v3).
 
 Run locally (needs Pillow + DejaVu fonts, both present on this machine):
 
@@ -8,13 +8,15 @@ Writes entry.png (1024x1024, well under 1 MiB) next to this file.
 The entry program (main.py) only copies that PNG; it never runs this
 script, so Pillow is a local build dependency, not a runtime one.
 
-Design (v2, denser than v1's five stories): dark masthead naming the
-day, one wide lead card, then a 3x5 grid of short stories — 16 stories
-in total. Every story was verified against reporting dated
-19 November 2026 before it was drawn. Dropped after checking:
-North Korea launch, Jeffries as Speaker, Voyager 1 (all misdated),
-plus borderline items whose events fell on 17–18 Nov (Gaza ground
-operation, Fed minutes, ARIA/CMA awards, Nvidia earnings).
+Design (v3, densest yet): dark masthead naming the day, one wide lead
+card, then a 4x6 grid of short stories — 25 stories in total. Every
+story was verified against reporting dated 19 November 2026 before it
+was drawn. Dropped after checking: North Korea launch, Jeffries as
+Speaker, Voyager 1 (all misdated), plus borderline items whose events
+fell on 17–18 Nov (Gaza ground operation, Fed minutes, ARIA/CMA
+awards, Nvidia earnings, Palo Alto's Applied Compute deal, NASA space
+dust, California AI plan). Mavericks' NBA win was verified but cut:
+two NBA results in one grid add no breadth.
 """
 
 from PIL import Image, ImageDraw, ImageFont
@@ -59,52 +61,80 @@ def wrap(draw, text, fnt, max_w, max_lines=None):
 
 
 # (tag, accent, headline, summary) — headlines fit 2 lines, summaries 2.
+# Grid order: row by row, most consequential first.
 STORIES = [
     ("DIPLOMACY", (31, 93, 140),
-     "Trump, Xi and Putin meet in Shenzhen",
-     "First-ever three-way meeting on the APEC sidelines."),
+     "Trump, Xi and Putin meet",
+     "First three-way meeting at APEC."),
     ("TECH", (27, 122, 90),
      "Anthropic debuts on Nasdaq",
-     "Shares trade as ANT after the record $81.3B IPO."),
+     "Shares trade as ANT after $81.3B IPO."),
     ("ASIA", (123, 72, 158),
-     "US–Philippines push $2B defence loan",
-     "$400M earmarked for South China Sea deterrence."),
+     "US–Philippines $2B loan push",
+     "$400M for South China Sea defence."),
     ("CULTURE", (198, 124, 18),
      "GTA VI launches worldwide",
-     "Rockstar's epic releases on PS5 and Xbox Series X|S."),
+     "Out now on PS5 and Xbox Series X|S."),
     ("JUSTICE", (128, 60, 60),
-     "ICJ rules in Rohingya genocide case",
-     "The Hague court delivers its Myanmar judgment."),
+     "ICJ rules in Rohingya case",
+     "The Hague delivers Myanmar judgment."),
     ("APEC", (31, 93, 140),
      "Xi chairs APEC, pledges $20M",
-     "China funds Asia-Pacific cooperation projects."),
+     "China funds Asia-Pacific projects."),
     ("WAR", (192, 57, 43),
-     "US official walks out of Ukraine talks",
-     "Colby quits Brussels meeting over long-range strikes."),
+     "US official quits Ukraine talks",
+     "Colby walks out in Brussels."),
     ("SUDAN", (128, 60, 60),
-     "Amnesty: RSF strikes are war crimes",
-     "Drone attacks on El Obeid killed 37 civilians."),
+     "Amnesty: RSF strikes war crimes",
+     "El Obeid drone attacks killed 37."),
+    ("EUROPE", (31, 93, 140),
+     "Coalition of the Willing meets",
+     "Leaders meet in Berlin on Ukraine guarantees."),
+    ("MIDDLE EAST", (192, 57, 43),
+     "Houthi missile threat to Riyadh",
+     "Coalition intercepts missile; debris falls."),
+    ("EU", (31, 93, 140),
+     "EU delays methane rules 2 years",
+     "Energy import rules postponed."),
     ("SPACE", (40, 90, 120),
      "China launches mystery satellite",
-     "Shijian-24 lifts off on a Long March 2D rocket."),
+     "Shijian-24 lifts off on Long March 2D."),
     ("CLIMATE", (27, 122, 90),
-     "COP31 gives kelp a seat at the table",
-     "Kelp forests recognised in ocean-climate talks."),
+     "COP31 gives kelp a seat",
+     "Kelp joins ocean-climate talks."),
     ("AI", (27, 122, 90),
-     "OpenAI redesigns AMD chips, +14%",
-     "AI models compress a year of chip work into months."),
+     "OpenAI redesigns AMD chips",
+     "AI work lifts GPU design by 14%."),
+    ("ASIA", (123, 72, 158),
+     "Malaysia's economy grows 5.5%",
+     "Q3 growth beats expectations."),
+    ("MARKETS", (27, 122, 90),
+     "KGHM beats forecasts",
+     "Q3 profit PLN 1.94B tops forecasts."),
+    ("SCIENCE", (40, 90, 120),
+     "mRNA vaccine shields vs Nipah",
+     "Jab protects all hamsters in trial."),
+    ("SCIENCE", (40, 90, 120),
+     "Gut sugar found to burn belly fat",
+     "Duke-NUS links bacterium sugar to energy use."),
     ("SPORT", (198, 124, 18),
      "Corinthians thrash Botafogo 4–0",
-     "Brazilian league rout on Thursday night."),
+     "Brazilian league rout."),
+    ("SPORT", (198, 124, 18),
+     "Grizzlies set road win record",
+     "124–121 at Cleveland, 8th straight."),
     ("USA", (31, 93, 140),
      "DOJ issues 200+ Alaska subpoenas",
-     "Probe into a decoy candidate in the Senate race."),
+     "Decoy-candidate probe in Senate race."),
     ("DIPLOMACY", (31, 93, 140),
      "Four nations: let aid reach Gaza",
-     "Call for access as floods hit the Strip."),
+     "Call for access as floods hit Strip."),
     ("LATIN AMERICA", (123, 72, 158),
-     "Panama: second arrest in attack case",
-     "Suspect held over attack on journalist's home."),
+     "Panama: second arrest in case",
+     "Suspect held over attack on journalist."),
+    ("AFRICA", (128, 60, 60),
+     "Nigeria shares ₦2.44 trillion",
+     "FAAC payout to federal, state, local govts."),
 ]
 
 
@@ -131,21 +161,21 @@ def draw_lead(draw, x, y, w, h):
 
 
 def draw_story(draw, x, y, w, h, tag, accent, headline, summary):
-    draw.rounded_rectangle([x, y, x + w, y + h], radius=10, fill=CARD)
-    draw.rectangle([x + 12, y, x + w - 12, y + 4], fill=accent)
-    tx = x + 14
-    ty = y + 12
-    draw.text((tx, ty), tag, font=font(FONT_BOLD, 13), fill=accent)
-    ty += 20
-    head_f = font(FONT_BOLD, 19)
-    for line in wrap(draw, headline, head_f, w - 28, max_lines=2):
+    draw.rounded_rectangle([x, y, x + w, y + h], radius=9, fill=CARD)
+    draw.rectangle([x + 10, y, x + w - 10, y + 4], fill=accent)
+    tx = x + 12
+    ty = y + 10
+    draw.text((tx, ty), tag, font=font(FONT_BOLD, 12), fill=accent)
+    ty += 17
+    head_f = font(FONT_BOLD, 16)
+    for line in wrap(draw, headline, head_f, w - 24, max_lines=2):
         draw.text((tx, ty), line, font=head_f, fill=INK)
-        ty += 24
-    ty += 3
-    body_f = font(FONT, 15)
-    for line in wrap(draw, summary, body_f, w - 28, max_lines=2):
+        ty += 20
+    ty += 2
+    body_f = font(FONT, 13)
+    for line in wrap(draw, summary, body_f, w - 24, max_lines=2):
         draw.text((tx, ty), line, font=body_f, fill=BODY)
-        ty += 19
+        ty += 16
 
 
 def main():
@@ -159,26 +189,26 @@ def main():
               font=font(FONT_BOLD, 20), fill=GOLD)
     draw.text((40, 42), "THURSDAY 19 NOVEMBER 2026",
               font=font(FONT_BOLD, 46), fill=(255, 255, 255))
-    draw.text((40, 100), "Sixteen stories that defined the day",
+    draw.text((40, 100), "Twenty-five stories that defined the day",
               font=font(FONT, 19), fill=(185, 198, 214))
 
     # Lead story: the war in Ukraine.
     draw_lead(draw, 32, 158, 960, 136)
 
-    # Grid: 3 columns x 5 rows of short stories.
-    cols, rows = 3, 5
-    cw, ch, gap = 309, 126, 16
+    # Grid: 4 columns x 6 rows of short stories.
+    cols, rows = 4, 6
+    cw, ch, gap = 231, 104, 12
     x0, y0 = 32, 304
     for i, (tag, accent, headline, summary) in enumerate(STORIES):
         cx = x0 + (i % cols) * (cw + gap)
-        cy = y0 + (i // cols) * (ch + 9)
+        cy = y0 + (i // cols) * (ch + 8)
         draw_story(draw, cx, cy, cw, ch, tag, accent, headline, summary)
 
     # Footer: dating + sourcing note, small but readable.
-    foot = ("16 stories from Thursday 19 November 2026  •  "
+    foot = ("25 stories from Thursday 19 November 2026  •  "
             "Reuters  •  AP  •  ICJ  •  Nasdaq")
     fw = draw.textlength(foot, font=font(FONT, 17))
-    draw.text(((W - fw) / 2, 982), foot, font=font(FONT, 17), fill=MUTED)
+    draw.text(((W - fw) / 2, 980), foot, font=font(FONT, 17), fill=MUTED)
 
     img.save(OUT, optimize=True)
     print("wrote", OUT)
