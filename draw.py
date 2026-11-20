@@ -1,4 +1,4 @@
-"""Draw the 19 November 2026 world-news front page (v3).
+"""Draw the 19 November 2026 world-news front page (v4).
 
 Run locally (needs Pillow + DejaVu fonts, both present on this machine):
 
@@ -8,15 +8,20 @@ Writes entry.png (1024x1024, well under 1 MiB) next to this file.
 The entry program (main.py) only copies that PNG; it never runs this
 script, so Pillow is a local build dependency, not a runtime one.
 
-Design (v3, densest yet): dark masthead naming the day, one wide lead
-card, then a 4x6 grid of short stories — 25 stories in total. Every
-story was verified against reporting dated 19 November 2026 before it
-was drawn. Dropped after checking: North Korea launch, Jeffries as
-Speaker, Voyager 1 (all misdated), plus borderline items whose events
-fell on 17–18 Nov (Gaza ground operation, Fed minutes, ARIA/CMA
-awards, Nvidia earnings, Palo Alto's Applied Compute deal, NASA space
-dust, California AI plan). Mavericks' NBA win was verified but cut:
-two NBA results in one grid add no breadth.
+Design (v4): dark masthead naming the day, one wide lead card, then a
+5x6 grid of short stories — 30 stories in total. Every story was
+verified against reporting dated 19 November 2026 before it was drawn.
+v4 adds the ICJ verdict (Myanmar guilty of genocide, 9-6, first state
+ever held responsible), Montenegro closing two more EU chapters (25/33),
+the Wall Street plunge (Dow -1,101), the Senate blocking the Iran
+war-powers resolution 48-51, Trump's posthumous pardon of Pete Rose,
+and the JPMorgan/Visa/Mastercard customer-data leak. Dropped after
+checking: North Korea launch, Jeffries as Speaker, Voyager 1 (all
+misdated), plus borderline items whose events fell on 17-18 Nov (Gaza
+ground operation, Fed minutes, ARIA/CMA awards, Nvidia earnings, Palo
+Alto's Applied Compute deal, NASA space dust, California AI plan, and
+the UN Security Council Libya briefing of 18 Nov). Mavericks' NBA win
+was verified but cut: two NBA results in one grid add no breadth.
 """
 
 from PIL import Image, ImageDraw, ImageFont
@@ -69,15 +74,30 @@ STORIES = [
     ("TECH", (27, 122, 90),
      "Anthropic debuts on Nasdaq",
      "Shares trade as ANT after $81.3B IPO."),
+    ("MARKETS", (27, 122, 90),
+     "Wall Street plunges",
+     "Dow \u22121,101; S&P falls 6th straight day."),
+    ("JUSTICE", (128, 60, 60),
+     "ICJ: Myanmar guilty of genocide",
+     "First state ever held responsible, 9-6."),
+    ("USA", (31, 93, 140),
+     "Senate blocks Iran war-powers bid",
+     "48-51 vote keeps Iran war powers."),
+    ("EUROPE", (31, 93, 140),
+     "Montenegro closes 2 more EU chapters",
+     "25 of 33 chapters now closed."),
+    ("SPORT", (198, 124, 18),
+     "Trump pardons Pete Rose",
+     "Posthumous pardon for hit king."),
+    ("TECH", (27, 122, 90),
+     "Hackers leak bank customer data",
+     "JPMorgan, Visa, Mastercard hit."),
     ("ASIA", (123, 72, 158),
-     "US–Philippines $2B loan push",
+     "US\u2013Philippines $2B loan push",
      "$400M for South China Sea defence."),
     ("CULTURE", (198, 124, 18),
      "GTA VI launches worldwide",
      "Out now on PS5 and Xbox Series X|S."),
-    ("JUSTICE", (128, 60, 60),
-     "ICJ rules in Rohingya case",
-     "The Hague delivers Myanmar judgment."),
     ("APEC", (31, 93, 140),
      "Xi chairs APEC, pledges $20M",
      "China funds Asia-Pacific projects."),
@@ -118,11 +138,11 @@ STORIES = [
      "Gut sugar found to burn belly fat",
      "Duke-NUS links bacterium sugar to energy use."),
     ("SPORT", (198, 124, 18),
-     "Corinthians thrash Botafogo 4–0",
+     "Corinthians thrash Botafogo 4\u20130",
      "Brazilian league rout."),
     ("SPORT", (198, 124, 18),
      "Grizzlies set road win record",
-     "124–121 at Cleveland, 8th straight."),
+     "124\u2013121 at Cleveland, 8th straight."),
     ("USA", (31, 93, 140),
      "DOJ issues 200+ Alaska subpoenas",
      "Decoy-candidate probe in Senate race."),
@@ -133,7 +153,7 @@ STORIES = [
      "Panama: second arrest in case",
      "Suspect held over attack on journalist."),
     ("AFRICA", (128, 60, 60),
-     "Nigeria shares ₦2.44 trillion",
+     "Nigeria shares \u20a62.44 trillion",
      "FAAC payout to federal, state, local govts."),
 ]
 
@@ -144,7 +164,7 @@ def draw_lead(draw, x, y, w, h):
     draw.rounded_rectangle([x, y, x + 9, y + h], radius=4, fill=accent)
     tx = x + 26
     ty = y + 16
-    draw.text((tx, ty), "UKRAINE  •  WAR", font=font(FONT_BOLD, 16),
+    draw.text((tx, ty), "UKRAINE  \u2022  WAR", font=font(FONT_BOLD, 16),
               fill=accent)
     ty += 26
     head_f = font(FONT_BOLD, 30)
@@ -165,17 +185,17 @@ def draw_story(draw, x, y, w, h, tag, accent, headline, summary):
     draw.rectangle([x + 10, y, x + w - 10, y + 4], fill=accent)
     tx = x + 12
     ty = y + 10
-    draw.text((tx, ty), tag, font=font(FONT_BOLD, 12), fill=accent)
-    ty += 17
-    head_f = font(FONT_BOLD, 16)
+    draw.text((tx, ty), tag, font=font(FONT_BOLD, 11), fill=accent)
+    ty += 16
+    head_f = font(FONT_BOLD, 15)
     for line in wrap(draw, headline, head_f, w - 24, max_lines=2):
         draw.text((tx, ty), line, font=head_f, fill=INK)
-        ty += 20
+        ty += 19
     ty += 2
-    body_f = font(FONT, 13)
+    body_f = font(FONT, 12)
     for line in wrap(draw, summary, body_f, w - 24, max_lines=2):
         draw.text((tx, ty), line, font=body_f, fill=BODY)
-        ty += 16
+        ty += 15
 
 
 def main():
@@ -189,15 +209,15 @@ def main():
               font=font(FONT_BOLD, 20), fill=GOLD)
     draw.text((40, 42), "THURSDAY 19 NOVEMBER 2026",
               font=font(FONT_BOLD, 46), fill=(255, 255, 255))
-    draw.text((40, 100), "Twenty-five stories that defined the day",
+    draw.text((40, 100), "Thirty stories that defined the day",
               font=font(FONT, 19), fill=(185, 198, 214))
 
     # Lead story: the war in Ukraine.
     draw_lead(draw, 32, 158, 960, 136)
 
-    # Grid: 4 columns x 6 rows of short stories.
-    cols, rows = 4, 6
-    cw, ch, gap = 231, 104, 12
+    # Grid: 5 columns x 6 rows of short stories.
+    cols, rows = 5, 6
+    cw, ch, gap = 182, 104, 12
     x0, y0 = 32, 304
     for i, (tag, accent, headline, summary) in enumerate(STORIES):
         cx = x0 + (i % cols) * (cw + gap)
@@ -205,8 +225,8 @@ def main():
         draw_story(draw, cx, cy, cw, ch, tag, accent, headline, summary)
 
     # Footer: dating + sourcing note, small but readable.
-    foot = ("25 stories from Thursday 19 November 2026  •  "
-            "Reuters  •  AP  •  ICJ  •  Nasdaq")
+    foot = ("30 stories from Thursday 19 November 2026  \u2022  "
+            "Reuters  \u2022  AP  \u2022  ICJ  \u2022  Nasdaq")
     fw = draw.textlength(foot, font=font(FONT, 17))
     draw.text(((W - fw) / 2, 980), foot, font=font(FONT, 17), fill=MUTED)
 
